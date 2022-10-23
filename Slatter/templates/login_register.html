@@ -1,0 +1,46 @@
+{%extends 'main.html'%} {% block content %} 
+
+{% if page == "login"%}
+
+<div class="container" style="max-width: 35rem;padding-top: 2rem;">
+    <h3 style="text-align: center;">Login Page</h3>
+    <form method="POST" action="">
+        {% csrf_token %}
+        <div class="form-group" style="margin: 1.5rem auto;">
+          <label for="exampleInputEmail1">Username</label>
+          <input type="text" name="username" placeholder="username" class="form-control" id="exampleInputEmail1">
+        </div>
+        <div class="form-group" style="margin: 1.5rem auto;">
+          <label for="exampleInputPassword1">Password</label>
+          <input type="password" name="password" placeholder="Enter password" class="form-control" id="exampleInputPassword1">
+        </div>
+        <button type="submit" class="btn btn-primary" value="Login">Submit</button>
+    </form>
+    <br>
+    <p>Don't have an account? <a style="text-decoration: none;" href="{% url 'register' %}">Register Here</a></p>
+</div>
+{% else %}
+ <div class="container" style="max-width: 35rem;padding-top: 2rem;">
+    <h3 style="text-align: center;">Register Page</h3>
+    <h6>Password Security:</h6>
+    <ul class="list-group">
+      <li class="list-group-item" style="background-color: #212529;color: rgb(63, 127, 245);">Password Should be Alpha-Numeric in nature</li>
+      <li class="list-group-item" style="background-color: #212529;color: rgb(63, 127, 245)">Your Username Should not come in your Password</li>
+      <li class="list-group-item" style="background-color: #212529;color: rgb(63, 127, 245)">Password Should NOT be a generic one eg. abc@13</li>
+    </ul>
+    <form method="POST" action="">
+        {% csrf_token %}
+        
+        {% for field in form %}
+        <div class="form-group" style="margin: 2rem auto;">
+          <label for="exampleInputEmail1" style="width: 15rem;">{{field.label}}</label>
+          {{field}}
+        </div>
+        {% endfor %}
+        <input type="submit" value="Register" class="btn btn-primary" style="margin: 1rem 12rem;"/>
+    </form>
+    <p style="margin: 0 10rem;">Already a user? <a style="text-decoration: none;" href="{% url 'login' %}">Login</a></p>
+</div
+{% endif %}
+
+{% endblock content %}

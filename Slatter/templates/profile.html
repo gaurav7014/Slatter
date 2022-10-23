@@ -1,0 +1,18 @@
+{% extends 'main.html' %} {% block content %}
+
+<p style="font-size: 2.5rem; text-align: center; margin: 1.5rem auto">
+  <span style="text-transform:uppercase">{{user.username}} </span>
+  {% if request.user == user %}
+  <a href="{% url 'update-user' %}" class="btn btn-warning"> Edit Profile</a>
+  {% endif %}
+</p>
+
+<div class="container">
+  <div class="row">
+    <div class="col-3">{% include 'topics.html' %}</div>
+    <div class="col-6">{% include 'feed_component.html' %}</div>
+    <div class="col-3">{% include 'activity_component.html' %}</div>
+  </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,45 @@
+<div class="row">
+  <div class="col-8">
+    <h5>Arena Rooms</h5>
+    <p>{{room_count}} rooms available</p>
+  </div>
+  {% if request.user == user %}
+  <div class="col-4">
+    <a
+      href="{% url 'create-room' %}"
+      class="list-group-item list-group-item-action active"
+      aria-current="true"
+    >
+      Create Room
+    </a>
+  </div>
+  {% endif %}
+</div>
+
+<div>
+  {% for room in rooms%}
+  <div class="card" style="background-color: #212529; margin: 1rem auto">
+    <div class="card-header" style="color: rgb(63, 127, 245)">
+      <a href="/user-profile/{{room.host.id}}">@{{room.host.username}}</a>
+    </div>
+    <div class="card-body">
+      <h3 class="card-title">
+        <a
+          style="text-decoration: none; color: aliceblue"
+          href="/room/{{room.id}}"
+          >{{room.name}}</a
+        >
+      </h3>
+      <p class="card-text" style="color: darkgray">{{room.topic.name}}</p>
+      {% if request.user == room.host %}
+      <a href="{% url 'update-room' room.id  %}" class="btn btn-warning">
+        Edit</a
+      >
+      <a href="{% url 'delete-room' room.id %}" class="btn btn-danger"
+        >Delete</a
+      >
+      {%endif%}
+    </div>
+  </div>
+  {% endfor %}
+</div>

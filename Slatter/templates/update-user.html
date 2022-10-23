@@ -1,0 +1,22 @@
+{% extends 'main.html' %} {% block content %}
+<div class="container" style="max-width: 35rem;padding-top: 2rem;">
+  <h3 style="text-align: center">Edit your Profile</h3>
+  <form action="" method="POST">
+    {% csrf_token %}
+
+
+    {% for field in form %}
+    <div class="form-group"  style="margin: 2rem 1rem 1rem;" >
+      <label for=""  style="width: 15rem;">{{field.label}}</label>
+      {{field}}
+    </div>
+    {% endfor %}
+    
+    <div class="form-action" style="margin: 2rem 1rem 1rem;" >
+      <a href="/" style="margin-left: 10rem;" class="btn btn-warning">Cancel</a>
+      <button type="submit" class="btn btn-primary">Update</button>
+    </div>
+
+  </form>
+</div>
+{% endblock content %}

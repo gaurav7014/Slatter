@@ -1,0 +1,98 @@
+{% extends 'main.html' %} {%block content%}
+
+<div class="container">
+  <div class="row">
+    <div class="col-9">
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+          <h1 class="display-3">{{room.name}}</h1>
+          <span class="lead">{{room.description}}</span>
+        </div>
+        <hr class="my-4" />
+        <div class="container">
+          <div class="row">
+            <div class="col-6">
+              Created at: {{room.created | timesince}} ago
+            </div>
+            <div class="col-6">
+              Host:
+              <a
+                href="{% url 'user-profile' room.host.id %}"
+                style="text-decoration: none"
+                >{{room.host}}</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding-top: 2rem" class="row">
+        <div class="col-8" style="padding-top: 1rem">
+          <h2>Conversation</h2>
+        </div>
+        <div class="col-1">
+          {% if request.user.is_authenticated %}
+          <div class="comment-form">
+            <form action="" method="post">
+              {% csrf_token %}
+              <label for="">Message</label>
+              <input type="text" name="body" placeholder="Write your Message" />
+            </form>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div>
+        {% for message in room_messages %}
+        <div
+          class="card"
+          style="
+            margin-top: 1.2rem;
+            background-color: #212529;
+            color: whitesmoke;
+          "
+        >
+          <div class="card-header">
+            <a
+              href="{% url 'user-profile' message.user.id %}"
+              style="text-decoration: none"
+              >@{{message.user}}</a
+            >
+            <div>Posted on: {{message.created | timesince}} ago</div>
+          </div>
+          <div class="card-body">
+            <p class="card-text">{{message.body}}</p>
+
+            {% if request.user == message.user %}
+            <a
+              href="{% url 'delete-message' message.id%}"
+              class="btn btn-danger"
+              >Delete</a
+            >
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="col-3">
+      <div>
+        <h3>Participants</h3>
+        <hr />
+        {% for user in participants %}
+        <div class="list-group">
+          <a
+            href="{% url 'user-profile' user.id %}"
+            class="list-group-item list-group-item-action"
+            style="background-color: #212529; color: darkgray"
+            >@{{user.username}}</a
+          >
+        </div>
+        {%endfor%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{%endblock content%}

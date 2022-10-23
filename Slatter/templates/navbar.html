@@ -1,0 +1,53 @@
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">S.L.A.T.T.E.R</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 navbar-nav-scroll">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Home </a>
+        </li>
+      </ul>
+      <form class="d-flex" method="GET" action="{% url 'home' %}">
+        <input
+          class="form-control me-2"
+          placeholder="Search Rooms"
+          aria-label="Search"
+          type="text"
+          name="q"
+          placeholder="Search Rooms"
+        />
+        <button class="btn btn-outline-primary" type="submit">Search</button>
+      </form>
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        {% if request.user.is_authenticated %}
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'user-profile' user.id %}"
+            ><span style="text-transform:uppercase">{{request.user}}</span>
+          </a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'update-user' %}">Edit Profile </a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/logout">Logout </a>
+        </li>
+        {% else %}
+        <li class="nav-item active">
+          <a class="nav-link" href="/login">Login </a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
